@@ -1,16 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEditor.Experimental.GraphView;
-using UnityEditor.Experimental.RestService;
-using UnityEditor.Timeline;
-using UnityEngine;
-using UnityEngine.Animations;
-
 using UnityEngine;
 
-using UnityEngine;
-using UnityEngine.SceneManagement; 
+using UnityEngine.SceneManagement;
 
 public class TopDownPlayer : MonoBehaviour
 {
@@ -41,7 +31,7 @@ public class TopDownPlayer : MonoBehaviour
         if (canTeleport && Input.GetKeyDown(KeyCode.Space))
         {
             Debug.Log("Æ÷Å»");
-            SceneManager.LoadScene("NextScene"); 
+            SceneManager.LoadScene("minigame"); 
         }
     }
 

@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour
 {
     public GameObject gameOverUI;
     public Text scoreText;
-
+    public string nextSceneName = "Main";
     private float score = 0f;
     private bool isGameOver = false;
 
@@ -31,12 +31,14 @@ public class GameManager : MonoBehaviour
         isGameOver = true;
         gameOverUI.SetActive(true); // 게임 오버 시 UI 표시
         Time.timeScale = 0; // 게임 정지
+
+        Invoke("LoadNextScene", 5f);
     }
 
-    public void RestartGame()
+    public void LoadNextScene()
     {
         Time.timeScale = 1;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        SceneManager.LoadScene(nextSceneName);
     }
 }
 
