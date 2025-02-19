@@ -9,12 +9,16 @@ using UnityEngine.Animations;
 
 using UnityEngine;
 
+using UnityEngine;
+using UnityEngine.SceneManagement; 
+
 public class TopDownPlayer : MonoBehaviour
 {
-    public float moveSpeed = 5f; // 이동 속도
+    public float moveSpeed = 5f;
 
     private Rigidbody2D rb;
     private Vector2 moveInput;
+    private bool canTeleport = false; // 포탈 위에 있는지 여부
 
     void Start()
     {
@@ -23,22 +27,43 @@ public class TopDownPlayer : MonoBehaviour
 
     void Update()
     {
-        // 입력 받기 (WASD 또는 방향키)
-        moveInput.x = Input.GetAxisRaw("Horizontal"); // A(-1) / D(1)
-        moveInput.y = Input.GetAxisRaw("Vertical");   // W(1) / S(-1)
-        moveInput.Normalize(); // 대각선 이동 속도 조정
+        moveInput.x = Input.GetAxisRaw("Horizontal");
+        moveInput.y = Input.GetAxisRaw("Vertical");
+        moveInput.Normalize();
 
-        // 이동 방향을 바라보도록 회전
         if (moveInput != Vector2.zero)
         {
             float angle = Mathf.Atan2(moveInput.y, moveInput.x) * Mathf.Rad2Deg;
             transform.rotation = Quaternion.Euler(0, 0, angle - 90);
         }
+
+        // 포탈 위에서 Space 키를 누르면 씬 이동
+        if (canTeleport && Input.GetKeyDown(KeyCode.Space))
+        {
+            Debug.Log("포탈");
+            SceneManager.LoadScene("NextScene"); 
+        }
     }
 
     void FixedUpdate()
     {
-        // 물리 기반 이동 적용
         rb.velocity = moveInput * moveSpeed;
+    }
+
+    // 포탈 위에 있는지 감지
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Portal"))
+        {
+            canTeleport = true;
+        }
+    }
+
+    void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.CompareTag("Portal"))
+        {
+            canTeleport = false;
+        }
     }
 }
