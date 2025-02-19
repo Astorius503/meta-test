@@ -3,38 +3,42 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEditor.Experimental.GraphView;
 using UnityEditor.Experimental.RestService;
+using UnityEditor.Timeline;
 using UnityEngine;
 using UnityEngine.Animations;
 
-public class Player : MonoBehaviour
+using UnityEngine;
+
+public class TopDownPlayer : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public float moveSpeed = 5f; // 이동 속도
+
+    private Rigidbody2D rb;
+    private Vector2 moveInput;
+
     void Start()
     {
-        Application.targetFrameRate = 60;
-        float direction = 0.05f;
+        rb = GetComponent<Rigidbody2D>();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        while (Application.isPlaying)
+        // 입력 받기 (WASD 또는 방향키)
+        moveInput.x = Input.GetAxisRaw("Horizontal"); // A(-1) / D(1)
+        moveInput.y = Input.GetAxisRaw("Vertical");   // W(1) / S(-1)
+        moveInput.Normalize(); // 대각선 이동 속도 조정
+
+        // 이동 방향을 바라보도록 회전
+        if (moveInput != Vector2.zero)
         {
-            if (Input.GetKeyUp(KeyCode.W))
-            {
-                transform.position = Vector2.up;
-            }
+            float angle = Mathf.Atan2(moveInput.y, moveInput.x) * Mathf.Rad2Deg;
+            transform.rotation = Quaternion.Euler(0, 0, angle - 90);
         }
     }
 
-   
-}
-
- public class MoveP
+    void FixedUpdate()
     {
-        public float x;
-        public float y;
-        public float PlayerD;
-
-
+        // 물리 기반 이동 적용
+        rb.velocity = moveInput * moveSpeed;
     }
+}
