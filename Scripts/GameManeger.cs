@@ -1,18 +1,44 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
-public class GameManeger : MonoBehaviour
+public class GameManager : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public GameObject gameOverUI;
+    public Text scoreText;
+
+    private float score = 0f;
+    private bool isGameOver = false;
+
     void Start()
     {
-        
+        gameOverUI.SetActive(false); // 게임 시작 시 GameOver UI 숨김
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+        if (!isGameOver)
+        {
+            score += Time.deltaTime; // 생존 시간 증가
+            scoreText.text = "Score: " + Mathf.FloorToInt(score).ToString();
+        }
+    }
+
+    public void GameOver()
+    {
+        isGameOver = true;
+        gameOverUI.SetActive(true); // 게임 오버 시 UI 표시
+        Time.timeScale = 0; // 게임 정지
+    }
+
+    public void RestartGame()
+    {
+        Time.timeScale = 1;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
+
+
+
