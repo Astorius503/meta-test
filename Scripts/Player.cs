@@ -31,7 +31,7 @@ public class TopDownPlayer : MonoBehaviour
         if (canTeleport && Input.GetKeyDown(KeyCode.Space))
         {
             Debug.Log("Æ÷Å»");
-            SceneManager.LoadScene("minigame"); 
+            SceneManager.LoadScene(sceneName: "minigame");
         }
     }
 

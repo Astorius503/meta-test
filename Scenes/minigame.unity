@@ -256,7 +256,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameOverUI: {fileID: 1977487880}
-  scoreText: {fileID: 1367385033}
+  mainSceneName: Main
 --- !u!4 &1027908971
 Transform:
   m_ObjectHideFlags: 0
@@ -373,8 +373,8 @@ MonoBehaviour:
   spawnRate: 2
   minY: -2
   maxY: 2
-  minScale: -0.1
-  maxScale: 0.2
+  minScale: 0.15
+  maxScale: 0.3
 --- !u!1 &1319416774
 GameObject:
   m_ObjectHideFlags: 0

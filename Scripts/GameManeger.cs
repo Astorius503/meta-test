@@ -1,46 +1,41 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    public GameObject gameOverUI;
-    public Text scoreText;
-    public string nextSceneName = "Main";
-    private float score = 0f;
+    public GameObject gameOverUI; // 게임 오버 UI
+    public string mainSceneName = "Main"; // 돌아갈 씬 이름
     private bool isGameOver = false;
 
     void Start()
     {
-        gameOverUI.SetActive(false); // 게임 시작 시 GameOver UI 숨김
+        gameOverUI.SetActive(false); // 게임 시작 시 Game Over UI 숨김
     }
 
     void Update()
     {
-        if (!isGameOver)
+        if (isGameOver && Input.GetKeyDown(KeyCode.Space)) // 게임 오버 상태에서 스페이스바 입력 감지
         {
-            score += Time.deltaTime; // 생존 시간 증가
-            scoreText.text = "Score: " + Mathf.FloorToInt(score).ToString();
+            LoadMainScene();
         }
     }
 
     public void GameOver()
     {
         isGameOver = true;
-        gameOverUI.SetActive(true); // 게임 오버 시 UI 표시
+        gameOverUI.SetActive(true); // 게임 오버 UI 표시
         Time.timeScale = 0; // 게임 정지
-
-        Invoke("LoadNextScene", 5f);
     }
 
-    public void LoadNextScene()
+    void LoadMainScene()
     {
-        Time.timeScale = 1;
-        SceneManager.LoadScene(nextSceneName);
+        Time.timeScale = 1; // 시간 정지 해제
+        SceneManager.LoadScene(mainSceneName); // Main 씬으로 이동
     }
 }
+
+
 
 
 
