@@ -257,6 +257,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameOverUI: {fileID: 1977487880}
   mainSceneName: Main
+  scoreText: {fileID: 1367385033}
 --- !u!4 &1027908971
 Transform:
   m_ObjectHideFlags: 0
@@ -848,9 +849,9 @@ MonoBehaviour:
     m_LineSpacing: 1
   m_Text: 'Game Over
 
-    Return to Robby
+    SPACE to Robby
 
-    in 5sec'
+'
 --- !u!222 &1977487883
 CanvasRenderer:
   m_ObjectHideFlags: 0

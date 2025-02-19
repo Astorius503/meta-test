@@ -6,7 +6,9 @@ public class GameManager : MonoBehaviour
 {
     public GameObject gameOverUI; // 게임 오버 UI
     public string mainSceneName = "Main"; // 돌아갈 씬 이름
+    public Text scoreText; // 점수 표시 UI
     private bool isGameOver = false;
+    private float score = 0f; // 생존 시간 (점수)
 
     void Start()
     {
@@ -15,6 +17,12 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
+        if (!isGameOver)
+        {
+            score += Time.deltaTime; // 생존 시간 증가
+            scoreText.text = "Score: " + Mathf.FloorToInt(score).ToString(); // UI 업데이트
+        }
+
         if (isGameOver && Input.GetKeyDown(KeyCode.Space)) // 게임 오버 상태에서 스페이스바 입력 감지
         {
             LoadMainScene();
